@@ -1,21 +1,28 @@
 
 import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, ScrollView, Image, TextInput } from 'react-native';
+import {StyleSheet, View,Text, ScrollView, Image, TextInput, TouchableOpacity} from 'react-native';
 import Filtro from './filtro';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Lista() {
     const [data, setData] = useState([]);
     const [busqueda, setBusqueda] = useState('');
     const [tipoSeleccionado, setTipoSeleccionado] = useState('All');
 
+    const navigation = useNavigation();
+
     useEffect(() => {
         const obtenerDatos = async () => {
             if (tipoSeleccionado === 'All') {
-                const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1025");
+                const res = await fetch(
+                    "https://pokeapi.co/api/v2/pokemon?limit=1025"
+                );
                 const json = await res.json();
                 setData(json.results);
             } else {
-                const res = await fetch(`https://pokeapi.co/api/v2/type/${tipoSeleccionado}`);
+                const res = await fetch(
+                    `https://pokeapi.co/api/v2/type/${tipoSeleccionado}`
+                );
                 const json = await res.json();
                 const listaFiltrada = json.pokemon.map(p => p.pokemon);
                 setData(listaFiltrada);
@@ -54,8 +61,16 @@ export default function Lista() {
 
             <View style={styles.lista}>
                 {resultados.map((pokemon, index) => (
-                    <View key={index} style={styles.item}>
-                        <Text>{pokemon.url.split("/")[6]}</Text>
+                    <TouchableOpacity
+                        key={index}
+                        style={styles.item}
+                        onPress={() =>
+                            navigation.navigate('Pokemon', {
+                                nombre: pokemon.name
+                            })
+                        }
+                    >
+                        <Text>{pokemon.url.split("/")[6]} {index}</Text>
 
                         <Image
                             source={{
@@ -65,7 +80,7 @@ export default function Lista() {
                         />
 
                         <Text>{pokemon.name}</Text>
-                    </View>
+                    </TouchableOpacity>
                 ))}
             </View>
         </ScrollView>
