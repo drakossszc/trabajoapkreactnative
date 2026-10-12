@@ -1,17 +1,38 @@
-import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
+import { useState, useEffect, useContext } from 'react';
+import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { AppContext } from '../context/AppContext';
+
 
 export default function Pokemon({ route }) {
     const { nombre } = route.params; // Obtener el nombre del Pokémondesde los parámetros
     const [pokemon, setPokemon] = useState(null);
+    const { favoritos, setFavoritos } = useContext(AppContext);
+    const esFavorito = favoritos.some(p => p.id === pokemon?.id);
+
+    const toggleFavorito = () => {
+    if (!pokemon) return;
+    if (esFavorito) {
+        setFavoritos(favoritos.filter(p => p.id !== pokemon.id));
+    } else {
+
+    setFavoritos([...favoritos, { id: pokemon.id, nombre: pokemon.name
+}]);
+}
+};
+    <TouchableOpacity onPress={toggleFavorito} style={{ marginTop: 20 }}>
+        <Text style={{ fontSize: 32 }}>{esFavorito ? '❤️' : '🤍'}</Text>
+    </TouchableOpacity>
+
     useEffect(() => {
     const obtenerPokemon = async () => {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`);
     const data = await res.json();
+    
     setPokemon(data);   
     };
     obtenerPokemon();
     }, [nombre]);
+    
     if (!pokemon) return <Text>Cargando...</Text>;
     return (
         <ScrollView>
