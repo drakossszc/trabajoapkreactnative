@@ -19,10 +19,6 @@ export default function Pokemon({ route }) {
 }]);
 }
 };
-    <TouchableOpacity onPress={toggleFavorito} style={{ marginTop: 20 }}>
-        <Text style={{ fontSize: 32 }}>{esFavorito ? '❤️' : '🤍'}</Text>
-    </TouchableOpacity>
-
     useEffect(() => {
     const obtenerPokemon = async () => {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`);
@@ -37,6 +33,17 @@ export default function Pokemon({ route }) {
     return (
         <ScrollView>
         <View style={styles.container}>
+            <TouchableOpacity
+            onPress={toggleFavorito}
+            style={{ marginTop: 20 }}
+            >
+        <Text style={{ fontSize: 32 }}>
+        {esFavorito ? '❤️' : '🤍'}
+        </Text>
+        <Text>
+        {esFavorito ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+        </Text>
+        </TouchableOpacity>
         <Text style={styles.titulo}>{pokemon.name}</Text>
     <Image
     source={{ uri:pokemon.sprites.other['official-artwork'].front_default }}
