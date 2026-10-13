@@ -1,6 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Informativa from './src/componentes/informativa';
 import Capturados from './src/componentes/capturados';
 import Favoritos from './src/componentes/favoritos';
 import Lista from './src/componentes/lista';
