@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import {StyleSheet, View,Text, ScrollView, Image, TextInput, TouchableOpacity} from 'react-native';
-import Filtro from './filtro';
+import Filtro from './Filtro';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Lista() {
