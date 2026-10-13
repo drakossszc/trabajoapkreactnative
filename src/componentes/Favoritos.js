@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView }
 from 'react-native';
-import { AppContext } from '../context/AppContext'; // o la ruta
-correcta
+import { AppContext } from '../context/AppContext'; 
 import { useNavigation } from '@react-navigation/native';
 export default function Favoritos() {
 const { favoritos } = useContext(AppContext);
